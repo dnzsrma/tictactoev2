@@ -34,11 +34,14 @@ function playerFactory(name,sign,isTurn){
 function game(p1Name,p2Name){
     let newGameBoard = gameBoard();
     //Count Turns
+    let p1Score = 0;
+    let p2Score = 0;
     let turn = 0;
     let xPlaces = [];
     let oPlaces = [];
     let xPlacesString = "";
     let oPlacesString = "";
+    let winnerFound = false;
     //Create the players
     const player1 = playerFactory(p1Name,"x",true);
     const player2 = playerFactory(p2Name,"o",false);
@@ -86,6 +89,8 @@ function game(p1Name,p2Name){
                 let testArray = winConditions[i];
                 if(testArray.every(r => xPlaces.includes(r))){
                     alert("Player 1 wins!");
+                    p1Score++;
+                    document.getElementById("p1-score").innerHTML = p1Score ; 
                     resetGame();
                 }
             }
@@ -95,9 +100,15 @@ function game(p1Name,p2Name){
                 let testArray = winConditions[i];
                 if(testArray.every(r => oPlaces.includes(r))){
                     alert("Player 2 wins!");
+                    p2Score++;
+                    document.getElementById("p2-score").innerHTML = p2Score ; 
                     resetGame();
                 }
             }
+        }
+        if(turn > 8 && winnerFound == false){
+            alert("It's a tie!");
+            resetGame();
         }
     }
     function resetGame(){
@@ -108,6 +119,7 @@ function game(p1Name,p2Name){
         turn = 0;
         newGameBoard = gameBoard();
         newGameBoard.publicUpdateBoard();
+        winnerFound = false;
     }
     const winConditions = [
         [1,2,3],
@@ -125,11 +137,15 @@ function game(p1Name,p2Name){
 
 (function nameEntryScreen(){
 
-
+    document.getElementById("restart-button").onclick = function(){
+        location.reload();
+    }
     let startButton = document.getElementById("start-play-button");
     startButton.onclick = function(){
         let p1Name = document.getElementsByClassName("inputs")[0].value;
         let p2Name = document.getElementsByClassName("inputs")[1].value;
+        document.getElementsByClassName("player-score-title")[0].innerHTML = p1Name + " Score:";
+        document.getElementsByClassName("player-score-title")[1].innerHTML = p2Name + " Score:";
         if(p1Name != null && p2Name != null){
             let newGame = game(p1Name,p2Name);
             document.getElementById("pop-up-names").remove();

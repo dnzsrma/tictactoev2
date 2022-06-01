@@ -1,6 +1,7 @@
 html,body{
     margin: 0px;
     background-color: black;
+    color: white;
 }
 button{
     margin: 50px;
@@ -50,9 +51,19 @@ button:active{
     border: 3px solid black;
     background-color: grey;
     height: 30px;
-    width: 300px;
+    width: 30vw;
 }
 #pop-up-names input,label{
     margin: 5px;
 
+}
+#header{
+    display: flex;
+    flex-direction: row;
+}
+#p1-score-container , #p2-score-container{
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    font-size: x-large;
 }
